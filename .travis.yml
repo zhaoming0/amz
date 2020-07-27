@@ -11,7 +11,7 @@ before_install:
   - ls
   - ls * -l
   - pwd
-  - export PATH = $PATH:/home/travis/build/zhaoming0/amz
+  - export PATH=$PATH:/home/travis/build/zhaoming0/amz
     
 script:
   python chrome.py

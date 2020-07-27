@@ -6,11 +6,10 @@ install:
 addons:
   chrome: stable
 before_install:
-  - sudo apt install tree -y
   - wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - ls
+  - ls * -l
   - pwd
-  - tree
 script:
   python chrome.py

@@ -52,7 +52,7 @@ with open('1.csv','r') as f:
         # print(linkStr)
 
 
-        for i in range(1,7):
+        for i in range(1,3):
             exits = 0
             # print("this is line 53 " + str(i))
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
@@ -75,7 +75,7 @@ with open('1.csv','r') as f:
                         for b in soup.find_all('a'):
                             # print('this is line 77 ')
                             b_link = str(b.get('href'))
-                            print(b_link, '--------------------')
+                            # print(b_link)
                             if ("READY-PARD-Compression-Basketball-Tights" in b_link):
                                 print('this is line 80')
                                 if (b_link.startswith('/gp')):

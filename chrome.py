@@ -48,9 +48,15 @@ with open('1.csv','r') as f:
         driver.maximize_window()
         print(linkStr)
 
+        driver.get('chrome://version/')
+        a = driver.find_element_by_xpath('//*[@id="version"]/span[1]').getText()
+        print(a)
+
+
+
         for i in range(1,7):
             exits = 0
-            print("this is line 53 " + str(i))
+            # print("this is line 53 " + str(i))
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')

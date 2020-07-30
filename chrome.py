@@ -73,9 +73,10 @@ with open('1.csv','r') as f:
                     if flag_adver == 0:
                         print("this is line 75")
                         for b in soup.find_all('a'):
-                            # print('this is line 77 ')
+                            print('this is line 77 ')
                             b_link = str(b.get('href'))
-                            # print(b_link)
+                            print(b_link)
+                            print(type(b_link))
                             if ("READY-PARD-Compression-Basketball-Tights" in b_link):
                                 print('this is line 80')
                                 if (b_link.startswith('/gp')):

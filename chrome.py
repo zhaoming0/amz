@@ -30,6 +30,9 @@ driver.get('https://www.amazon.com/?currency=USD&language=en_US')
 time.sleep(5)
 driver.execute_script("document.body.style.zoom='0.9'")
 # time.sleep(5)
+driver.get('chrome://version/')
+chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
+print('chrome version is : ' + chromeversion)
 
 final_result = []
 with open('1.csv','r') as f:
@@ -48,11 +51,6 @@ with open('1.csv','r') as f:
         driver.maximize_window()
         # print(linkStr)
 
-        driver.get('chrome://version/')
-        b = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
-        print(b)
-
-
 
         for i in range(1,7):
             exits = 0
@@ -68,13 +66,14 @@ with open('1.csv','r') as f:
                 # print (link)
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     print ('this is line 72')
+                    print(link)
                     keyword = linkStr.replace('+', ' ')[4:]
                     print(keyword)
                     
                     if flag_adver == 0:
                         print("this is line 75")
                         for b in soup.find_all('a'):
-                            print('this is line 77 ')
+                            # print('this is line 77 ')
                             b_link = str(b.get('href'))
                             print(b_link, '--------------------')
                             if ("READY-PARD-Compression-Basketball-Tights" in b_link):

@@ -37,7 +37,7 @@ with open('1.csv','r') as f:
     for row in reader:       
         lineToStr = row[0]
         lineToList = lineToStr.split(' ')
-        # print(lineToList)
+        print(lineToList)
         linkStr='s?k='
         # picPath = ''
         for i in range(len(lineToList)):

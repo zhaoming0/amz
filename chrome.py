@@ -50,8 +50,10 @@ with open('1.csv','r') as f:
 
         driver.get('chrome://version/')
         a = driver.find_element_by_xpath('//*[@id="version"]/span[1]').get_attribute('value')
+        b = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
         # driver.find_element_by_xpath().text()
         print(a)
+        print(b)
 
 
 
@@ -62,10 +64,12 @@ with open('1.csv','r') as f:
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')
             for a in soup.find_all('img'):
+                print("this is line 67")
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))
                 if ("61wZfCGn7AL._AC_UL320" in link):
+                    print ('this is line 72')
                     keyword = linkStr.replace('+', ' ')[4:]
                     # print('\n')
                     

@@ -50,6 +50,7 @@ with open('1.csv','r') as f:
 
         for i in range(1,7):
             exits = 0
+            print("this is line 53 " + str(i))
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')

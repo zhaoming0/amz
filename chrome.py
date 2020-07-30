@@ -65,7 +65,7 @@ with open('1.csv','r') as f:
                     keyword = linkStr.replace('+', ' ')[4:]
                     print(keyword)
                     if (keyword not in final_result):
-                        final_result[keyword] = {ads:[],nature:[]}
+                        final_result[keyword] = {adver:[],nature:[]}
                     if flag_adver == 0:
                         for b in soup.find_all('a'):
                             b_link = str(b.get('href'))

@@ -64,7 +64,7 @@ with open('1.csv','r') as f:
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')
             for a in soup.find_all('img'):
-                print("this is line 67")
+                # print("this is line 67")
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))

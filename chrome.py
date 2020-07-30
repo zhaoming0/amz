@@ -64,13 +64,12 @@ with open('1.csv','r') as f:
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     keyword = linkStr.replace('+', ' ')[4:]
                     print(keyword)
+                    if (keyword not in final_result):
+                        final_result[keyword] = {ads:[],nature:[]}
                     if flag_adver == 0:
-                        print("this is line 75")
                         for b in soup.find_all('a'):
-                            # print('this is line 77 ')
                             b_link = str(b.get('href'))
                             if ("READY-PARD-Compression-Pants-Tights" in b_link):
-                                print('this is line 80')
                                 if (b_link.startswith('/gp')):
                                     print('\nthis is adver link : ')
                                     print(keyword+' page is : '+str(i))

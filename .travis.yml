@@ -17,6 +17,5 @@ before_install:
   - export PATH=$PATH:/home/travis/build/zhaoming0/amz
 
     
-script:
-  chromedriver 
+script: 
   python chrome.py

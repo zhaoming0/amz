@@ -18,7 +18,7 @@ import urllib.request
 
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
 chrome_option = webdriver.ChromeOptions()
-chrome_option.add_argument('--headless')
+# chrome_option.add_argument('--headless')
 chrome_option.add_argument('log-level=3')
 chrome_option.add_argument('--disable-gpu')
 chrome_option.add_argument('--ignore-certificate-errors')

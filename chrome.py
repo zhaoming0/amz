@@ -61,7 +61,6 @@ with open('1.csv','r') as f:
                 link = str(a.get('src'))
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     keyword = linkStr.replace('+', ' ')[4:]
-                    # print(keyword)
                     if (keyword not in final_result):
                         final_result[keyword] = {'adver':[],'nature':[]}
                     if flag_adver == 0:

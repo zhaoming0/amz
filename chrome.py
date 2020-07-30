@@ -34,7 +34,7 @@ driver.get('chrome://version/')
 chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
 print('chrome version is : ' + chromeversion)
 
-final_result = []
+final_result = {}
 with open('1.csv','r') as f:
     reader = csv.reader(f)
     for row in reader:       
@@ -54,22 +54,16 @@ with open('1.csv','r') as f:
 
         for i in range(1,2):
             exits = 0
-            # print("this is line 53 " + str(i))
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')
             for a in soup.find_all('img'):
-                # print("this is line 67")
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))
-                # print (link)
                 if ("61wZfCGn7AL._AC_UL320" in link):
-                    print ('this is line 72')
-                    print(link)
                     keyword = linkStr.replace('+', ' ')[4:]
                     print(keyword)
-                    
                     if flag_adver == 0:
                         print("this is line 75")
                         for b in soup.find_all('a'):

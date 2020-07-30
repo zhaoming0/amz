@@ -29,7 +29,6 @@ driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://www.amazon.com/?currency=USD&language=en_US')
 time.sleep(5)
 driver.execute_script("document.body.style.zoom='0.9'")
-# time.sleep(5)
 driver.get('chrome://version/')
 chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
 print('chrome version is : ' + chromeversion)
@@ -40,19 +39,15 @@ with open('1.csv','r') as f:
     for row in reader:       
         lineToStr = row[0]
         lineToList = lineToStr.split(' ')
-        # print(lineToList)
         linkStr='s?k='
-        # picPath = ''
         for i in range(len(lineToList)):
             linkStr= linkStr + lineToList[i] + '+'
             # picPath = picPath + lineToList[i] +'_'
         linkStr= linkStr[:-1]
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
-        # print(linkStr)
 
-
-        for i in range(1,2):
+        for i in range(1,7):
             exits = 0
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
             soup = BeautifulSoup(driver.page_source, "html.parser")
@@ -65,26 +60,30 @@ with open('1.csv','r') as f:
                     keyword = linkStr.replace('+', ' ')[4:]
                     print(keyword)
                     if (keyword not in final_result):
-                        final_result[keyword] = {adver:[],nature:[]}
+                        final_result[keyword] = {'adver':[],'nature':[]}
                     if flag_adver == 0:
                         for b in soup.find_all('a'):
                             b_link = str(b.get('href'))
                             if ("READY-PARD-Compression-Pants-Tights" in b_link):
                                 if (b_link.startswith('/gp')):
-                                    print('\nthis is adver link : ')
-                                    print(keyword+' page is : '+str(i))
-                                    print(b_link)
+                                    # print('\nthis is adver link : ')
+                                    # print(keyword+' page is : '+str(i))
+                                    # print(b_link)
                                     flag_adver = 1
+                                    final_result[keyword]['adver'] = str(1)
                                     break
                     if flag_nature == 0:
                         for b in soup.find_all('a'):
                             b_link = str(b.get('href'))
                             if ("READY-PARD-Compression-Pants-Tights" in b_link):
                                 if (b_link.startswith('/READY-PARD-Compression-Pants-Tights')):
-                                    print('\nthis is nature link : ')
-                                    print(keyword+' page is : '+str(i))
-                                    print(b_link)
+                                    # print('\nthis is nature link : ')
+                                    # print(keyword+' page is : '+str(i))
+                                    # print(b_link)
                                     flag_nature = 1
+                                    ASIN = b_link.split('/')[3]
+                                    NUM = b_link.split('-')[-1]
+                                    final_result[keyword]['nature'] = [str(i), ASIN, NUM]
                                     break
                     if (flag_nature == 1 and flag_adver == 1):
                         print(keyword+"has get two keyword    ---------------------------")
@@ -92,7 +91,7 @@ with open('1.csv','r') as f:
                         break
             if exits == 1:
                 break
-
+print(final_result)
 driver.quit()
 
 

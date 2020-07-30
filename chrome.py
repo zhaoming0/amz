@@ -20,9 +20,9 @@ nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
 chrome_options = webdriver.ChromeOptions()
 # chrome_options.add_argument('--headless')
 chrome_options.add_argument('log-level=3')
-chrome_options.add_argument('--disable-gpu')
+# chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--ignore-certificate-errors')
-chrome_options.add_argument('--disable-images')
+# chrome_options.add_argument('--disable-images')
 chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
@@ -68,6 +68,7 @@ with open('1.csv','r') as f:
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))
+                print (link)
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     print ('this is line 72')
                     keyword = linkStr.replace('+', ' ')[4:]

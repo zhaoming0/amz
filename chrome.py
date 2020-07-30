@@ -49,10 +49,7 @@ with open('1.csv','r') as f:
         print(linkStr)
 
         driver.get('chrome://version/')
-        a = driver.find_element_by_xpath('//*[@id="version"]/span[1]').get_attribute('value')
         b = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
-        # driver.find_element_by_xpath().text()
-        print(a)
         print(b)
 
 
@@ -68,7 +65,7 @@ with open('1.csv','r') as f:
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))
-                print (link)
+                # print (link)
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     print ('this is line 72')
                     keyword = linkStr.replace('+', ' ')[4:]

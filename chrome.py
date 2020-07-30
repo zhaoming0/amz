@@ -77,7 +77,7 @@ with open('1.csv','r') as f:
                             b_link = str(b.get('href'))
                             print(b_link)
                             print(type(b_link))
-                            if ("READY-PARD-Compression-Basketball-Tights" in b_link):
+                            if ("READY-PARD-Compression-Pants-Tights" in b_link):
                                 print('this is line 80')
                                 if (b_link.startswith('/gp')):
                                     print('\nthis is adver link : ')
@@ -88,8 +88,8 @@ with open('1.csv','r') as f:
                     if flag_nature == 0:
                         for b in soup.find_all('a'):
                             b_link = str(b.get('href'))
-                            if ("READY-PARD-Compression-Basketball-Tights" in b_link):
-                                if (b_link.startswith('/READY-PARD-Compression-Basketball-Tights')):
+                            if ("READY-PARD-Compression-Pants-Tights" in b_link):
+                                if (b_link.startswith('/READY-PARD-Compression-Pants-Tights')):
                                     print('\nthis is nature link : ')
                                     print(keyword+' page is : '+str(i))
                                     print(b_link)

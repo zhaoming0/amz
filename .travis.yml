@@ -1,6 +1,12 @@
 language: python
 python:
   - "3.8"
+matrix:
+ include:
+  - os:osx
+    python:"3.8"
+    sudo: "required"
+    
 install:
   - pip install -r requirements.txt
 addons:

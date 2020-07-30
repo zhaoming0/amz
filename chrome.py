@@ -46,7 +46,7 @@ with open('1.csv','r') as f:
         linkStr= linkStr[:-1]
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
-        print(linkStr)
+        # print(linkStr)
 
         driver.get('chrome://version/')
         b = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
@@ -69,12 +69,15 @@ with open('1.csv','r') as f:
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     print ('this is line 72')
                     keyword = linkStr.replace('+', ' ')[4:]
-                    # print('\n')
+                    print(keyword)
                     
                     if flag_adver == 0:
+                        print("this is line 75")
                         for b in soup.find_all('a'):
+                            print('this is line 77 ')
                             b_link = str(b.get('href'))
                             if ("READY-PARD-Compression-Basketball-Tights" in b_link):
+                                print('this is line 80')
                                 if (b_link.startswith('/gp')):
                                     print('\nthis is adver link : ')
                                     print(keyword+' page is : '+str(i))

@@ -33,8 +33,11 @@ driver.get('chrome://version/')
 chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
 print('chrome version is : ' + chromeversion)
 
+counts = 0
 final_result = {}
 with open('1.csv','r') as f:
+    counts = 1 + counts
+    print('this is counts : ' , str(counts))
     reader = csv.reader(f)
     for row in reader:       
         lineToStr = row[0]
@@ -58,7 +61,7 @@ with open('1.csv','r') as f:
                 link = str(a.get('src'))
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     keyword = linkStr.replace('+', ' ')[4:]
-                    print(keyword)
+                    # print(keyword)
                     if (keyword not in final_result):
                         final_result[keyword] = {'adver':[],'nature':[]}
                     if flag_adver == 0:

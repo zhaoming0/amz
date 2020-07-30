@@ -37,7 +37,7 @@ with open('1.csv','r') as f:
     for row in reader:       
         lineToStr = row[0]
         lineToList = lineToStr.split(' ')
-        print(lineToList)
+        # print(lineToList)
         linkStr='s?k='
         # picPath = ''
         for i in range(len(lineToList)):
@@ -46,6 +46,7 @@ with open('1.csv','r') as f:
         linkStr= linkStr[:-1]
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
+        print(linkStr)
 
         for i in range(1,7):
             exits = 0

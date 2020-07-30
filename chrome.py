@@ -36,8 +36,6 @@ print('chrome version is : ' + chromeversion)
 counts = 0
 final_result = {}
 with open('1.csv','r') as f:
-    counts = 1 + counts
-    print('this is counts : ' , str(counts))
     reader = csv.reader(f)
     for row in reader:       
         lineToStr = row[0]
@@ -49,6 +47,8 @@ with open('1.csv','r') as f:
         linkStr= linkStr[:-1]
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
+        counts = 1 + counts
+        print('this is counts : ' , str(counts))
 
         for i in range(1,7):
             exits = 0

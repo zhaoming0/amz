@@ -17,15 +17,15 @@ import urllib.request
 
 
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
-chrome_option = webdriver.ChromeOptions()
-# chrome_option.add_argument('--headless')
-chrome_option.add_argument('log-level=3')
-chrome_option.add_argument('--disable-gpu')
-chrome_option.add_argument('--ignore-certificate-errors')
-chrome_option.add_argument('--disable-images')
-chrome_option.add_argument('--start-maximized')
+chrome_options = webdriver.ChromeOptions()
+# chrome_options.add_argument('--headless')
+chrome_options.add_argument('log-level=3')
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--ignore-certificate-errors')
+chrome_options.add_argument('--disable-images')
+chrome_options.add_argument('--start-maximized')
 
-driver = webdriver.Chrome(chrome_options=chrome_option)
+driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://www.amazon.com/?currency=USD&language=en_US')
 time.sleep(5)
 driver.execute_script("document.body.style.zoom='0.9'")

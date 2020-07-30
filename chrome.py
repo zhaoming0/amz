@@ -49,7 +49,8 @@ with open('1.csv','r') as f:
         print(linkStr)
 
         driver.get('chrome://version/')
-        a = driver.find_element_by_xpath('//*[@id="version"]/span[1]').getText()
+        a = driver.find_element_by_xpath('//*[@id="version"]/span[1]').get_attribute('value')
+        # driver.find_element_by_xpath().text()
         print(a)
 
 

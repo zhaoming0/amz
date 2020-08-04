@@ -26,12 +26,12 @@ chrome_options.add_argument('--ignore-certificate-errors')
 chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
-driver.get('https://www.amazon.com/?currency=USD&language=en_US')
-time.sleep(5)
-driver.execute_script("document.body.style.zoom='0.9'")
-driver.get('chrome://version/')
-chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
-print('chrome version is : ' + chromeversion)
+# driver.get('https://www.amazon.com/?currency=USD&language=en_US')
+# time.sleep(5)
+# driver.execute_script("document.body.style.zoom='0.9'")
+# driver.get('chrome://version/')
+# chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
+# print('chrome version is : ' + chromeversion)
 
 counts = 0
 final_result = {}
@@ -49,10 +49,19 @@ with open('1.csv','r') as f:
         driver.maximize_window()
         counts = 1 + counts
         print('this is counts : ' , str(counts))
+        flags = False
 
-        for i in range(1,7):
+        for i in range(1,3):
             exits = 0
-            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
+            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')
+            if flags == False:
+                print(flags)
+                count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text
+                print('this is line 59 ', count)
+                count = count.split(' ')[-3].replace(',','')
+                flags = True
+            print(count)
+            print(flags)
             soup = BeautifulSoup(driver.page_source, "html.parser")
             soup.select('div.s-main-slot')
             for a in soup.find_all('img'):

@@ -78,11 +78,11 @@ with open('1.csv','r') as f:
                         final_result[keyword][2] = nature
 driver.quit()
 
+for k,v in final_result.items():
+    print(k,v)
+
 pf = pd.DataFrame(final_result)
 pf = pd.DataFrame(pf.values.T, index= pf.columns, columns=pf.index)
 file_path = pd.ExcelWriter('asin-top.xlsx')
 pf.to_excel(file_path,encoding='utf-8',index=True)
 file_path.save()
-for k,v in final_result.items():
-    print(k,v)
-

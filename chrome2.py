@@ -14,7 +14,7 @@ import string
 import os
 from bs4 import BeautifulSoup
 import urllib.request
-
+import pandas as pd
 
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
 chrome_options = webdriver.ChromeOptions()
@@ -27,11 +27,11 @@ chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://www.amazon.com/?currency=USD&language=en_US')
-time.sleep(5)
+time.sleep(15)
 driver.execute_script("document.body.style.zoom='0.9'")
-driver.get('chrome://version/')
-chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
-print('chrome version is : ' + chromeversion)
+# driver.get('chrome://version/')
+# chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
+# print('chrome version is : ' + chromeversion)
 
 counts = 0
 final_result = {}
@@ -48,134 +48,44 @@ with open('2.csv','r') as f:
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
         counts = 1 + counts
-        print('this is counts : ' , str(counts))
-        count = 0
+        flags = False
+        keyword = linkStr.replace('+', ' ')[4:]
+        print(keyword)
+        if (keyword not in final_result):
+            final_result[keyword] = [0, 0, 0]
+        
 
         for i in range(1,7):
-            exits = 0
-            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i))
-            if count == 0:
+            if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
+                print('this is debug info for line 60')
+                break
+            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            
+            if flags == False:
                 count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text
                 count = count.split(' ')[-3].replace(',','')
-            print(count)
-            # page_nums = driver.find_elements_by_xpath('//*[@id="search"]/div[1]/div/div[1]/div/span[3]/div[2]/div[4]').get_attribute('class')
-            # print(page_nums,'111111111')
-            
-            # for i in range(page_nums):
-            #     print (i)
-            #     asindata=driver.find_elements_by_xpath('//*[@id="search"]/div[1]/div/div[1]/div/span[3]/div[2]/div[3]')
-            #     print(asindata)
-            # print(divs)
-            # divs1 = driver.find_elements_by_xpath('//*[@id="search"]/div[1]/div/div[1]/div/span[3]/div[2]/div[3]')
-            # print(len(divs1))
-            # print('22222222')
-            # print(divs1)
-
-#             soup = BeautifulSoup(driver.page_source, "html.parser")
-#             soup.select('div.s-main-slot')
-#             for a in soup.find_all('img'):
-#                 flag_adver = 0
-#                 flag_nature = 0
-#                 link = str(a.get('src'))
-#                 if ("61wZfCGn7AL._AC_UL320" in link):
-#                     keyword = linkStr.replace('+', ' ')[4:]
-#                     if (keyword not in final_result):
-#                         final_result[keyword] = {'adver':[],'nature':[]}
-#                     if flag_adver == 0:
-#                         for b in soup.find_all('a'):
-#                             b_link = str(b.get('href'))
-#                             if ("READY-PARD-Compression-Pants-Tights" in b_link):
-#                                 if (b_link.startswith('/gp')):
-#                                     flag_adver = 1
-#                                     final_result[keyword]['adver'] = [str(i)]
-#                                     break
-#                     if flag_nature == 0:
-#                         for b in soup.find_all('a'):
-#                             b_link = str(b.get('href'))
-#                             if ("READY-PARD-Compression-Pants-Tights" in b_link):
-#                                 if (b_link.startswith('/READY-PARD-Compression-Pants-Tights')):
-#                                     flag_nature = 1
-#                                     ASIN = b_link.split('/')[3]
-#                                     NUM = b_link.split('-')[-1]
-#                                     final_result[keyword]['nature'] = [str(i), ASIN, NUM]
-#                                     break
-#                     if (flag_nature == 1 and flag_adver == 1):
-#                         print(keyword+" has get two keyword    ---------------------------")
-#                         exits = 1
-#                         break
-#             if exits == 1:
-#                 break
-# print(final_result)
+                if final_result[keyword][0] == 0:
+                    final_result[keyword][0] = count
+                flags = True
+            soup = BeautifulSoup(driver.page_source, "html.parser")
+            for asin in soup.find_all(href=re.compile("READY-PARD-Compression-Pants")):
+                links = str(asin.get('href'))
+                if (links.startswith('/gp')):
+                    # adver 
+                    adver = links.split('sr_1_')[1].split('_')[0]
+                    if final_result[keyword][1] == 0:
+                        final_result[keyword][1] = adver
+                else:
+                    nature = links.split('sr_1_')[1].split('?')[0]
+                    # nature
+                    if final_result[keyword][2] == 0:
+                        final_result[keyword][2] = nature
 driver.quit()
 
+for k,v in final_result.items():
+    print(k,v)
 
-# csv_columns = ['1','2','3','4','5','6']
-# final_result= {'knee pad basketball': {'adver': [], 'nature': ['1', 'B08CS8YFK5', '8']}, 'basketball pants with knee pads': {'adver': ['1'], 'nature': ['1', 'B08CS8YFK5', '7']}, 'youth basketball leggings with knee pads': {'adver': ['1'], 'nature': ['1', 'B08CS8YFK5', '7']}}
-# csv_file = 'data.csv'
-
-# resutls  = []
-# for k , v  in final_result.items():
-#     resutls  = []
-#     resutls.append(k)
-#     if isinstance(v,dict):
-#         for a,b in v.items():
-#             for i in range(len(b)):
-#                 # if (b[i]) is None:
-#                 #     b[i] = 'None'
-                
-                
-#                 if b[i]:
-#                     pass
-#                 else:
-#                     b[i] = 'None'
-#                 print(b[i])
-#                 resutls.append(b[i])
-                
-#     print(resutls)
-#     print('\n')
-
-
-# try:
-#     with open(csv_file, 'w') as csvfile:
-#         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-#         writer.writeheader()
-#         for data in final_result:
-#             writer.writerow(data)
-# except IOError:
-#     print("I/O error")
-# for k,v in final_result.items():
-#     c = ''
-#     d = ''
-#     for a,b in v.items():
-#         # print('k is : ',k,' a is : ', a , ' b is : ', b)
-#         a = c
-#         b = d
-#     print (k,c,d)
-
-
-# def traverse(value, key=None):
-#     if isinstance(value, dict):
-#         for k, v in value.items():
-#             yield from traverse(v, k)
-#     else:
-#         yield key, value
-# def myprint(d):
-#     for k, v in traverse(d):
-#         print(f"{k} : {v}")
-
-# myprint(final_result)
-
-# def print_nested(d):
-#     if isinstance(d, dict):
-#         for k, v in d.items():
-#             print_nested(v)
-#     elif hasattr(d, '__iter__') and not isinstance(d, str):
-#         for item in d:
-#             print_nested(item)
-#     elif isinstance(d, str):
-#         print(d)
-
-#     else:
-#         print(d)
-
-# print_nested(final_result)
+pf = pd.DataFrame(final_result)
+pf = pd.DataFrame(pf.values.T, index= pf.columns, columns=pf.index)
+file_path = pd.ExcelWriter('asin-top.xlsx')
+pf.to_excel(file_path,encoding='utf-8',index=True)
+file_path.save()

@@ -57,21 +57,28 @@ with open('1.csv','r') as f:
             if flags == False:
                 print(flags)
                 count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text
-                print('this is line 59 ', count)
+                # print('this is line 59 ', count)
                 count = count.split(' ')[-3].replace(',','')
                 flags = True
-            print(count)
-            print(flags)
+            # print(count)
+            # print(flags)
             soup = BeautifulSoup(driver.page_source, "html.parser")
-            soup.select('div.s-main-slot')
+            soup.select('div.a-section a-spacing-none s-result-item s-flex-full-width s-border-bottom-none s-widget')
+            # a = soup.next_siblings
+            # for a in soup.find_all(re.compile("*data-asin")):
+            #     print(a)
+            
             for a in soup.find_all('img'):
                 flag_adver = 0
                 flag_nature = 0
                 link = str(a.get('src'))
                 if ("61wZfCGn7AL._AC_UL320" in link):
                     keyword = linkStr.replace('+', ' ')[4:]
+                    print(keyword)
                     if (keyword not in final_result):
                         final_result[keyword] = {'adver':[],'nature':[]}
+                        print(count)
+                        print('13')
                     if flag_adver == 0:
                         for b in soup.find_all('a'):
                             b_link = str(b.get('href'))

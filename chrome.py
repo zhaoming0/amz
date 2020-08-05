@@ -14,7 +14,7 @@ import string
 import os
 from bs4 import BeautifulSoup
 import urllib.request
-
+import pandas as pd
 
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
 chrome_options = webdriver.ChromeOptions()
@@ -26,10 +26,10 @@ chrome_options.add_argument('--ignore-certificate-errors')
 chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
-# driver.get('https://www.amazon.com/?currency=USD&language=en_US')
-# time.sleep(5)
-# driver.execute_script("document.body.style.zoom='0.9'")
-# driver.get('chrome://version/')
+driver.get('https://www.amazon.com/?currency=USD&language=en_US')
+time.sleep(5)
+driver.execute_script("document.body.style.zoom='0.9'")
+driver.get('chrome://version/')
 # chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
 # print('chrome version is : ' + chromeversion)
 
@@ -50,66 +50,39 @@ with open('1.csv','r') as f:
         counts = 1 + counts
         print('this is counts : ' , str(counts))
         flags = False
+        keyword = linkStr.replace('+', ' ')[4:]
+        if (keyword not in final_result):
+            final_result[keyword] = [0, 0, 0]
 
-        for i in range(1,3):
+        for i in range(1,7):
             exits = 0
-            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')
+            driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            
             if flags == False:
-                print(flags)
                 count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text
-                # print('this is line 59 ', count)
                 count = count.split(' ')[-3].replace(',','')
+                if final_result[keyword][0] == 0:
+                    final_result[keyword][0] = count
                 flags = True
-            # print(count)
-            # print(flags)
             soup = BeautifulSoup(driver.page_source, "html.parser")
-            soup.select('div.a-section a-spacing-none s-result-item s-flex-full-width s-border-bottom-none s-widget')
-            # a = soup.next_siblings
-            # for a in soup.find_all(re.compile("*data-asin")):
-            #     print(a)
-            
-            for a in soup.find_all('img'):
-                flag_adver = 0
-                flag_nature = 0
-                link = str(a.get('src'))
-                if ("61wZfCGn7AL._AC_UL320" in link):
-                    keyword = linkStr.replace('+', ' ')[4:]
-                    print(keyword)
-                    if (keyword not in final_result):
-                        final_result[keyword] = {'adver':[],'nature':[]}
-                        print(count)
-                        print('13')
-                    if flag_adver == 0:
-                        for b in soup.find_all('a'):
-                            b_link = str(b.get('href'))
-                            if ("READY-PARD-Compression-Pants-Tights" in b_link):
-                                if (b_link.startswith('/gp')):
-                                    # print('\nthis is adver link : ')
-                                    # print(keyword+' page is : '+str(i))
-                                    # print(b_link)
-                                    flag_adver = 1
-                                    final_result[keyword]['adver'] = str(1)
-                                    break
-                    if flag_nature == 0:
-                        for b in soup.find_all('a'):
-                            b_link = str(b.get('href'))
-                            if ("READY-PARD-Compression-Pants-Tights" in b_link):
-                                if (b_link.startswith('/READY-PARD-Compression-Pants-Tights')):
-                                    # print('\nthis is nature link : ')
-                                    # print(keyword+' page is : '+str(i))
-                                    # print(b_link)
-                                    flag_nature = 1
-                                    ASIN = b_link.split('/')[3]
-                                    NUM = b_link.split('-')[-1]
-                                    final_result[keyword]['nature'] = [str(i), ASIN, NUM]
-                                    break
-                    if (flag_nature == 1 and flag_adver == 1):
-                        print(keyword+"has get two keyword    ---------------------------")
-                        exits = 1
-                        break
-            if exits == 1:
-                break
-print(final_result)
+            for asin in soup.find_all(href=re.compile("READY-PARD-Compression-Pants")):
+                links = str(asin.get('href'))
+                if (links.startswith('/gp')):
+                    # adver 
+                    adver = links.split('sr_1_')[1].split('_')[0]
+                    if final_result[keyword][1] == 0:
+                        final_result[keyword][1] = adver
+                else:
+                    nature = links.split('sr_1_')[1].split('?')[0]
+                    # nature
+                    if final_result[keyword][2] == 0:
+                        final_result[keyword][2] = nature
 driver.quit()
 
+pf = pd.DataFrame(final_result)
+pf = pd.DataFrame(pf.values.T, index= pf.columns, columns=pf.index)
+file_path = pd.ExcelWriter('asin-top.xlsx')
+pf.to_excel(file_path,encoding='utf-8',index=True)
+file_path.save()
+for k,v in final_result.items():
+    print(k,v)
 

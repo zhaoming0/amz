@@ -27,15 +27,15 @@ chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://www.amazon.com/?currency=USD&language=en_US')
-time.sleep(5)
+time.sleep(15)
 driver.execute_script("document.body.style.zoom='0.9'")
-driver.get('chrome://version/')
+# driver.get('chrome://version/')
 # chromeversion = driver.find_element_by_xpath('//*[@id="version"]/span[1]').text
 # print('chrome version is : ' + chromeversion)
 
 counts = 0
 final_result = {}
-with open('1.csv','r') as f:
+with open('2.csv','r') as f:
     reader = csv.reader(f)
     for row in reader:       
         lineToStr = row[0]
@@ -48,14 +48,20 @@ with open('1.csv','r') as f:
         # picPath = picPath[:-1].replace('/','-')
         driver.maximize_window()
         counts = 1 + counts
-        print('this is counts : ' , str(counts))
         flags = False
         keyword = linkStr.replace('+', ' ')[4:]
+        print('this is num of : ' + str(counts) + ' ' + keyword)
         if (keyword not in final_result):
             final_result[keyword] = [0, 0, 0]
+        
 
         for i in range(1,7):
-            exits = 0
+            print(final_result[keyword][0])
+            print(final_result[keyword][1])
+            print(final_result[keyword][2])
+            if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
+                print('this is debug info for line 60')
+                break
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            
             if flags == False:
                 count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text

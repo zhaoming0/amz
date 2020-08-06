@@ -35,7 +35,7 @@ driver.execute_script("document.body.style.zoom='0.9'")
 
 counts = 0
 final_result = {}
-with open('1.csv','r') as f:
+with open('test.csv','r') as f:
     reader = csv.reader(f)
     for row in reader:       
         lineToStr = row[0]
@@ -50,11 +50,11 @@ with open('1.csv','r') as f:
         counts = 1 + counts
         flags = False
         keyword = linkStr.replace('+', ' ')[4:]
-        print(str(counts) + ' for keyword ' + keyword)
+        print(str(counts) + ' for keyword: ' + keyword)
         if (keyword not in final_result):
             final_result[keyword] = [0, 0, 0]
         for i in range(1,7):
-            print('page :' + str(i))
+            # print('page :' + str(i))
             if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
                 break
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            

@@ -56,6 +56,7 @@ with open('2.csv','r') as f:
         
 
         for i in range(1,7):
+            print('now is page :' + str(i))
             if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
                 print('this is debug info for line 60')
                 break

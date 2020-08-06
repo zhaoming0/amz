@@ -35,7 +35,7 @@ driver.execute_script("document.body.style.zoom='0.9'")
 
 counts = 0
 final_result = {}
-with open('2.csv','r') as f:
+with open('1.csv','r') as f:
     reader = csv.reader(f)
     for row in reader:       
         lineToStr = row[0]

@@ -9,7 +9,7 @@ from shutil import copyfile
 repo = Repo('.')
 while True:
     time_now = time.strftime("%H:%M:%S", time.localtime())
-    if time_now == "01:18:00":
+    if time_now == "07:00:00":
         print(time_now)
         time.sleep(1)
         for i in (os.listdir('.')):

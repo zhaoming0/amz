@@ -53,8 +53,6 @@ with open('2.csv','r') as f:
         print(str(counts) + ' for keyword ' + keyword)
         if (keyword not in final_result):
             final_result[keyword] = [0, 0, 0]
-        
-
         for i in range(1,7):
             print('page :' + str(i))
             if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):

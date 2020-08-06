@@ -1,9 +1,14 @@
-version: 2.1
-
+version: 2
 jobs:
   build:
     docker:
-      -image: circleci/python:3.6.2-stretch-browsers
+      -image: circleci/python:3.8-browsers
+  step:
+      - checkout
+      - run:
+          name: download selenium
+          command: wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
+          
   build-and-test:
     executor: python/default
     steps:

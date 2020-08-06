@@ -18,7 +18,7 @@ import pandas as pd
 
 nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
 chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 chrome_options.add_argument('log-level=3')
 # chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--ignore-certificate-errors')

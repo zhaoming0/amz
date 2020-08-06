@@ -8,20 +8,10 @@ jobs:
       - run:
           name: download selenium
           command: |
-            curl -O https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip | unzip chromedriver_linux64.zip
-
-  build-and-test:
-    executor: python/default
-    steps:
-      - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
+            curl https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip 
+            unzip chromedriver_linux64.zip
       - run:
           command: python chrome.py
           name: Test
 
-workflows:
-  main:
-    jobs:
-      - build-and-test
+

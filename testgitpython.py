@@ -3,35 +3,21 @@ import os
 import subprocess
 import sys
 import time
+from shutil import copyfile
+
 
 repo = Repo('.')
 # print(repo)
 # print(repo.active_branch)
 # repo.index.add(['1.csv'])
-# repo.index.commit('test gitpython')
-# repo.git.push
+# repo.index.commit('test gitpython 2348')
+# subprocess.check_call(['git', 'push', 'origin', 'master'])
+for i in (os.listdir('.')):
+    if i.endswith('csv') and 'Second-collection' in i:
+        commitName = (i.split('.')[0])
+        copyfile(i, 'test.csv')
+        repo.index.add(['test.csv'])
+        repo.index.commit(commitName)
+        subprocess.check_call(['git', 'push', 'origin', 'master'])
+        time.sleep(10)
 
-gitconfig = {
-    'cwd': './blog/public',
-    'git': {
-        'origin': ['zhaoming0@github.com:akkuman/akkuman.github.io.git', 'master'],
-        # 'coding': ['git@git.coding.net:Akkuman/Akkuman.git', 'coding-pages'],
-    }
-}
- 
-def main():
-      
-    # push to every remote repo
-    for k,v in gitconfig['git'].items():
-        print('----')
-        print(k)
-        print(v)
-        print('+++++++++++++')
-        # subprocess.check_call(['git', 'push', k, 'master:%s' % v[1]])
-        print(['git', 'push', k, 'master:%s' % v[1]])
- 
-if __name__ == '__main__':
-    # if len(sys.argv) == 2:
-    #     if sys.argv[1] == '-h':
-    #         print('Usage:\n\t%s [commit_message]' % sys.argv[0])
-    main()

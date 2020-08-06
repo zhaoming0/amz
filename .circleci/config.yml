@@ -7,9 +7,7 @@ jobs:
       - checkout
       - run:
           name: download selenium
-          command: |
-            curl https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip 
-            unzip chromedriver_linux64.zip
+          command: curl https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip 
       - run:
           command: python chrome.py
           name: Test

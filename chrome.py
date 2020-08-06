@@ -50,15 +50,14 @@ with open('2.csv','r') as f:
         counts = 1 + counts
         flags = False
         keyword = linkStr.replace('+', ' ')[4:]
-        print('this is num of : ' + str(counts) + ' ' + keyword)
+        print(str(counts) + ' for keyword ' + keyword)
         if (keyword not in final_result):
             final_result[keyword] = [0, 0, 0]
         
 
         for i in range(1,7):
-            print('now is page :' + str(i))
+            print('page :' + str(i))
             if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
-                print('this is debug info for line 60')
                 break
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            
             if flags == False:
@@ -68,7 +67,7 @@ with open('2.csv','r') as f:
                     final_result[keyword][0] = count
                 flags = True
             soup = BeautifulSoup(driver.page_source, "html.parser")
-            for asin in soup.find_all(href=re.compile("READY-PARD-Compression-Pants")):
+            for asin in soup.find_all(href=re.compile("READY-PARD-")):
                 links = str(asin.get('href'))
                 if (links.startswith('/gp')):
                     # adver 

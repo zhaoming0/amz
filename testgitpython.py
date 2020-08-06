@@ -13,7 +13,7 @@ repo = Repo('.')
 # repo.index.commit('test gitpython 2348')
 # subprocess.check_call(['git', 'push', 'origin', 'master'])
 for i in (os.listdir('.')):
-    if i.endswith('csv') and 'Second-collection' in i:
+    if i.endswith('csv') and i is not 'test.csv':
         print(i)
         commitName = (i.split('.')[0])
         copyfile(i, 'test.csv')

@@ -14,6 +14,7 @@ repo = Repo('.')
 # subprocess.check_call(['git', 'push', 'origin', 'master'])
 for i in (os.listdir('.')):
     if i.endswith('csv') and 'Second-collection' in i:
+        print(i)
         commitName = (i.split('.')[0])
         copyfile(i, 'test.csv')
         repo.index.add(['test.csv'])

@@ -50,7 +50,7 @@ with open('test.csv','r') as f:
         counts = 1 + counts
         flags = False
         keyword = linkStr.replace('+', ' ')[4:]
-        print(str(counts) + ' for keyword: ' + keyword)
+        print(str(counts) + ' for  keyword: ' + keyword)
         if (keyword not in final_result):
             final_result[keyword] = [0, 0, 0]
         for i in range(1,7):

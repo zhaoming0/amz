@@ -4,11 +4,11 @@ jobs:
     docker:
       -image: circleci/python:3.8-browsers
   step:
-      - checkout
-      - run:
+      -checkout
+      -run:
           name: download selenium
           command: curl https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip 
-      - run:
+      -run:
           command: python chrome.py
           name: Test
 

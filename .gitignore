@@ -1,4 +1,3 @@
 !test.csv
-keyword/*.csv
 *.csv
 debug.log

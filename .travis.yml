@@ -17,4 +17,4 @@ before_install:
   - unzip chromedriver_linux64.zip
   - export PATH=$PATH:/home/travis/build/zhaoming0/amz
 script: 
-  python chrome.py
+  python getIndex.py

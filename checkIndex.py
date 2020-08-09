@@ -54,10 +54,8 @@ with open('test.csv','r') as f:
         soup = BeautifulSoup(driver.page_source, "html.parser")
         asin = soup.find_all(href=re.compile("READY-PARD-"))
         if len(asin):
-            # final_result[keyword] = '-Y'
-            print(keyword , '-Y')
+            print(keyword , '-Y-index')
         else:
-            # final_result[keyword] = '-N'
-            print(keyword , '-N')
+            print(keyword , '-N-index')
 driver.quit()
 
